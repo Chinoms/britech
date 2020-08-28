@@ -29,6 +29,7 @@ class Crud
 		if ($conn->query($query) == TRUE) {
 			return "success";
 		} else {
+			echo $conn->error;
 			echo "failed";
 		}
 	}

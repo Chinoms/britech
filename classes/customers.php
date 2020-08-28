@@ -18,6 +18,20 @@ class Customers extends Crud
         }
     }
 
+    function newCustomerKYC($conn, $value, $columnName, $tablename, $tableName, $data, $columns)
+    {
+        if ($this->fetchDataWhere($conn, $value, $columnName, $tablename) == "nodatafound") {
+            if ($this->storeData($conn, $tableName, $data, $columns) == "success") {
+                echo "useradded";
+            } else {
+                echo "savefailed";
+            }
+        } else {
+            //echo $conn->error;
+            echo "usernameexists";
+        }
+    }
+
     function paginate($conn, $pagenum, $tableName, $recordsPerPage)
     {
         $start = ($pagenum - 1) * $recordsPerPage;
@@ -127,6 +141,41 @@ class Customers extends Crud
         $totalRecords = $result->fetch_array()[0];
         $totalPages = ceil($totalRecords / $recordsPerPage);
         $sql = "SELECT * FROM $tableName WHERE phone LIKE '%$searchTerm%' OR username LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%'  ORDER BY ID DESC LIMIT $start, $recordsPerPage";
+        $tableData = $conn->query($sql);
+
+        while ($userData = $tableData->fetch_assoc()) {
+            //echo "<li>" . $userData['fullname'] . "</li>"; //change 'name' to the appropriate offset from your database table.
+
+            if (empty($userData)) {
+                echo "<h1 style='text-align:center'>Oops! I couldn't find anything.</h1>";
+            }
+            if ($userData['daysleft']  < 10) {
+                $daysLeftClass = "btn-danger";
+            } else {
+                $daysLeftClass = "btn-success";
+            }
+            echo '
+                  <tr>
+                      <td>' . $userData["fullname"] . '</td>
+                      <td>' . $userData["username"] . '</td>
+                      <td>' . $userData["phone"] . '</td>
+                      <td>' . $userData["password"] . '</td>
+                      <td>' . $userData["viplevel"] . '</td>
+                      <td><button class="btn ' . $daysLeftClass . '">' . $userData["daysleft"] . '</button></td>
+                      </tr>
+                    <tr>';
+        }
+
+
+        echo '</tbody>
+        </table>';
+    }
+
+
+    function fetchPending($conn, $tableName)
+    {
+        //
+        $sql = "SELECT * FROM $tableName WHERE verified = 0 ORDER BY ID DESC";
         $tableData = $conn->query($sql);
 
         while ($userData = $tableData->fetch_assoc()) {
