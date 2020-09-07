@@ -63,12 +63,12 @@ require_once("classes/customers.php");
 
         if (isset($_REQUEST['s'])) {
           $searchTerm = $_REQUEST['s'];
-          $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE phone LIKE '%$searchTerm%' OR username LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%'";
+          $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE phone LIKE '%$searchTerm%' OR username LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' AND verified = 1";
           //die($fetchPages);
         } else if (isset($_REQUEST['totrade'])) {
-          $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE daysleft < 3";
+          $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE daysleft < 3 AND verified = 1";
         } else {
-          $fetchPages = "SELECT COUNT(*) FROM $tableName";
+          $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE verified = 1";
         }
         $result = $conn->query($fetchPages);
         $totalRecords = mysqli_fetch_array($result)[0];

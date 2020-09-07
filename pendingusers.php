@@ -3,6 +3,13 @@ require_once("inc/header.php");
 require_once("inc/sidebar.php");
 require_once("classes/config.php");
 require_once("classes/customers.php");
+
+if(isset($_REQUEST['message']) && $_REQUEST['message'] == "updated"){
+  ?>
+<script>alert('User verified succesfully');</script>
+
+  <?php
+}
 ?>
 
 <div class="content-wrapper">
@@ -11,7 +18,7 @@ require_once("classes/customers.php");
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Downliners</h1>
+          <h1>Unverified customers</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -38,7 +45,7 @@ require_once("classes/customers.php");
     <!-- Default box -->
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Title</h3>
+        <h3 class="card-title">Unverified Users</h3>
 
         <div class="card-tools">
           <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -60,7 +67,6 @@ require_once("classes/customers.php");
           <th>Password</th>
           <th>VIP Level</th>
           <th>Trading Days Left</th>
-          <th>Trade Duration</th>
           <th>Actions</th>
         </tr>
       </thead>

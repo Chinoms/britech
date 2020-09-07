@@ -85,6 +85,22 @@ class Crud
 			return false;
 		}
 	}
+
+	public function selectAll($conn, $tableName){
+		$fetchAll = "SELECT * FROM $tableName";
+		$result = $conn->query($fetchAll);
+		if($conn->affected_rows > 0) {
+			//$dataset = array();
+			$payload = $result->fetch_array();
+				$dataset = $payload;
+				//return $dataset;
+			
+			//return true;
+			return $dataset;
+		} else {
+			return false;
+		}
+	}
 }
 
 $runCrud = new Crud();

@@ -35,11 +35,11 @@ class Customers extends Crud
     function paginate($conn, $pagenum, $tableName, $recordsPerPage)
     {
         $start = ($pagenum - 1) * $recordsPerPage;
-        $fetchPages = "SELECT COUNT(*) FROM $tableName ORDER BY ID DESC"; //change "tableName" to your table name.
+        $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE verified = 1 ORDER BY ID DESC"; //change "tableName" to your table name.
         $result = $conn->query($fetchPages);
         $totalRecords = $result->fetch_array()[0];
         $totalPages = ceil($totalRecords / $recordsPerPage);
-        $sql = "SELECT * FROM $tableName ORDER BY ID DESC LIMIT $start, $recordsPerPage";
+        $sql = "SELECT * FROM $tableName WHERE verified = 1 ORDER BY ID DESC LIMIT $start, $recordsPerPage";
         $tableData = $conn->query($sql);
         $tradingPeriods2 = "<button class='btn btn-primary'>Trade 10 days</button>";
         while ($userData = $tableData->fetch_assoc()) {
@@ -86,7 +86,7 @@ class Customers extends Crud
     function toBeTraded($conn, $pagenum, $tableName, $recordsPerPage)
     {
         $start = ($pagenum - 1) * $recordsPerPage;
-        $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE daysleft < 3"; //change "tableName" to your table name.
+        $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE daysleft < 3 AND verified = 1"; //change "tableName" to your table name.
         $result = $conn->query($fetchPages);
         $totalRecords = $result->fetch_array()[0];
         $totalPages = ceil($totalRecords / $recordsPerPage);
@@ -140,7 +140,7 @@ class Customers extends Crud
         $result = $conn->query($fetchPages);
         $totalRecords = $result->fetch_array()[0];
         $totalPages = ceil($totalRecords / $recordsPerPage);
-        $sql = "SELECT * FROM $tableName WHERE phone LIKE '%$searchTerm%' OR username LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%'  ORDER BY ID DESC LIMIT $start, $recordsPerPage";
+        $sql = "SELECT * FROM $tableName WHERE phone LIKE '%$searchTerm%' OR username LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' AND verified = 1  ORDER BY ID DESC LIMIT $start, $recordsPerPage";
         $tableData = $conn->query($sql);
 
         while ($userData = $tableData->fetch_assoc()) {
@@ -197,6 +197,7 @@ class Customers extends Crud
                       <td>' . $userData["password"] . '</td>
                       <td>' . $userData["viplevel"] . '</td>
                       <td><button class="btn ' . $daysLeftClass . '">' . $userData["daysleft"] . '</button></td>
+                      <td><a href="modules/approvecustomer.php?user_id='.$userData["ID"].'"><button class="btn btn-primary">Approve</button></a></td>
                       </tr>
                     <tr>';
         }
@@ -236,14 +237,14 @@ class Customers extends Crud
 
 
     function countAllCustomers($conn){
-        $query = "SELECT COUNT(*) as total FROM customers";
+        $query = "SELECT COUNT(*) as total FROM customers WHERE verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
     
     function countVIP1($conn){
-        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 1";
+        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 1 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
@@ -251,28 +252,28 @@ class Customers extends Crud
     
     
     function countVIP2($conn){
-        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 2";
+        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 2 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
     
     function countVIP3($conn){
-        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 3";
+        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 3 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
     
     function countVIP4($conn){
-        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel =3";
+        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel =3 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
     
     function countVIP5($conn){
-        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 5";
+        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 5 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
@@ -280,7 +281,7 @@ class Customers extends Crud
 
 
     function dueForTrading($conn){
-        $query = "SELECT COUNT(*) as total FROM customers WHERE daysleft  < 3";
+        $query = "SELECT COUNT(*) as total FROM customers WHERE daysleft  < 3 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
