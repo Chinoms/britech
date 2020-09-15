@@ -58,7 +58,7 @@ require_once("classes/customers.php");
           $pagenum = 1;
         }
         $tableName = "customers";
-        $recordsPerPage = 3;
+        $recordsPerPage = 20;
 
 
         if (isset($_REQUEST['s'])) {
