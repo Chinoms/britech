@@ -92,7 +92,7 @@ require_once("classes/customers.php");
           $runCustomers->searchCustomers($conn, $pagenum, $tableName, $recordsPerPage, $searchTerm);
         } else if (isset($_REQUEST['totrade'])) {
           $tableName = "customers";
-          $recordsPerPage = 10;
+          $recordsPerPage = 20;
           $runCustomers->toBeTraded($conn, $pagenum, $tableName, $recordsPerPage);
         } else {
 

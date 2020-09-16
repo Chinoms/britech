@@ -73,7 +73,9 @@ class Customers extends Crud
                       <td>VIP' . $userData["viplevel"] . '</td>
                       <td><button class="btn ' . $daysLeftClass . '">' . $userData["daysleft"] . '</button></td>
                       <td>' . $userData["tradeduration"] . '</td>
-                      <td>' . $tradeButton . '</td>
+                      <td>' . $tradeButton . '<a href="viewcustomer.php?customer_id=' . $userData['ID'] . '&&edit"><button class="btn btn-primary">Edit</button></a>
+                      <a href="viewcustomer.php?customer_id=' . $userData['ID'] . '"><button class="btn btn-primary">View</button></a>
+                      </td>
                       </tr>
                     <tr>';
         }
@@ -124,8 +126,9 @@ class Customers extends Crud
                       <td>VIP' . $userData["viplevel"] . '</td>
                       <td><button class="btn ' . $daysLeftClass . '">' . $userData["daysleft"] . '</button></td>
                       <td>' . $userData["tradeduration"] . '</td>
-                      <td>' . $tradeButton . '</td>
-                      </tr>
+                      <td>' . $tradeButton . '<a href="viewcustomer.php?customer_id=' . $userData['ID'] . '&&edit"><button class="btn btn-primary">Edit</button></a>
+                      <a href="viewcustomer.php?customer_id=' . $userData['ID'] . '"><button class="btn btn-primary">View</button></a>
+                      </td>
                     <tr>';
         }
 
@@ -162,6 +165,23 @@ class Customers extends Crud
                       <td>' . $userData["password"] . '</td>
                       <td>' . $userData["viplevel"] . '</td>
                       <td><button class="btn ' . $daysLeftClass . '">' . $userData["daysleft"] . '</button></td>
+                      <td><a href="viewcustomer.php?customer_id=' . $userData['ID'] . '&&edit"><button class="btn btn-primary">Edit</button></a>
+                      <a href="viewcustomer.php?customer_id=' . $userData['ID'] . '"><button class="btn btn-primary">View</button></a>';
+
+            $vipLevel = $userData['viplevel'];
+            if ($vipLevel == 1) {
+                $tradeButton = "<button class='btn btn-danger'>No trading</button>";
+            } elseif ($vipLevel == 2) {
+                $tradeButton = "<a href='trade.php?trade=10&&customerid=" . $userData['ID'] . "'><button class='btn btn-primary'><strong>+10</strong></button></a>";
+                // $tradeButton = $tradingPeriods2."<button class='btn btn-primary'>10</button>";
+            } else {
+                $tradeButton = "
+                          <a href='trade.php?trade=10&&customerid=" . $userData['ID'] . "'><button class='btn btn-secondary'><strong>+10</strong></button></a>
+                          <a href='trade.php?trade=50&&customerid=" . $userData['ID'] . "'><button class='btn btn-success'><strong>+50</strong></button></a> 
+                          <a href='trade.php?trade=100&&customerid=" . $userData['ID'] . "'><button class='btn btn-primary'><strong>+100</strong></button>";
+                echo $tradeButton;
+            }
+            echo '</td>
                       </tr>
                     <tr>';
         }
@@ -197,7 +217,7 @@ class Customers extends Crud
                       <td>' . $userData["password"] . '</td>
                       <td>' . $userData["viplevel"] . '</td>
                       <td><button class="btn ' . $daysLeftClass . '">' . $userData["daysleft"] . '</button></td>
-                      <td><a href="modules/approvecustomer.php?user_id='.$userData["ID"].'"><button class="btn btn-primary">Approve</button></a></td>
+                      <td><a href="modules/approvecustomer.php?user_id=' . $userData["ID"] . '"><button class="btn btn-primary">Approve</button></a></td>
                       </tr>
                     <tr>';
         }
@@ -218,61 +238,69 @@ class Customers extends Crud
     }
 
 
-    function fetchBanks($conn){
+    function fetchBanks($conn)
+    {
         $query = "SELECT * FROM banks";
         $query = $conn->query($query);
-        while($banks = $query->fetch_assoc()) {
-            echo '<option value="'.$banks["sort_code"].'">'.$banks['bank_name'].'</option>';
+        while ($banks = $query->fetch_assoc()) {
+            echo '<option value="' . $banks["sort_code"] . '">' . $banks['bank_name'] . '</option>';
         }
     }
 
 
-    function fetchUsersDropdown($conn){
+    function fetchUsersDropdown($conn)
+    {
         $query = "SELECT * FROM customers ORDER BY fullname ASC";
         $query = $conn->query($query);
-        while($banks = $query->fetch_assoc()) {
-            echo '<option value="'.$banks["username"].'">'.$banks['fullname'].'</option>';
+        while ($banks = $query->fetch_assoc()) {
+            echo '<option value="' . $banks["username"] . '">' . $banks['fullname'] . '</option>';
         }
     }
 
 
-    function countAllCustomers($conn){
+    function countAllCustomers($conn)
+    {
         $query = "SELECT COUNT(*) as total FROM customers WHERE verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
-    
-    function countVIP1($conn){
+
+    function countVIP1($conn)
+    {
         $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 1 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
-    
-    
-    function countVIP2($conn){
+
+
+    function countVIP2($conn)
+    {
         $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 2 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
-    
-    function countVIP3($conn){
+
+    function countVIP3($conn)
+    {
         $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 3 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
-    
-    function countVIP4($conn){
+
+    function countVIP4($conn)
+    {
         $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel =3 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];
     }
-    
-    function countVIP5($conn){
+
+    function countVIP5($conn)
+    {
         $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 5 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
@@ -280,7 +308,8 @@ class Customers extends Crud
     }
 
 
-    function dueForTrading($conn){
+    function dueForTrading($conn)
+    {
         $query = "SELECT COUNT(*) as total FROM customers WHERE daysleft  < 3 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();

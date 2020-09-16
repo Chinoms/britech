@@ -11,12 +11,12 @@ require_once("classes/customers.php");
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Blank Page</h1>
+                    <h1>Search results for "<?php echo $_REQUEST['s']; ?>"</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
+                        <li class="breadcrumb-item active">Search page</li>
                     </ol>
                 </div>
             </div>
@@ -65,6 +65,8 @@ require_once("classes/customers.php");
           <th>Phone Number</th>
           <th>Password</th>
           <th>VIP Level</th>
+          <th>Trading Days Left</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>';
