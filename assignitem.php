@@ -39,70 +39,72 @@ require_once("inc/sidebar.php");
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
-                        <form action="modules/issueitem" method="POST">`
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Recipient</label>
-                                    <select name="recipient" class="form-control js-example-basic-single">
-                                        <option value="" disabled="disabled" selected>Select a recipient</option>
-                                        <?php
-                                        $fetchAll = "SELECT * FROM customers";
-                                        $result = $conn->query($fetchAll);
-                                        if ($conn->affected_rows > 0) {
-                                            while ($recipients = $result->fetch_assoc()) {
-                                                echo "<option value='" . $recipients['ID'] . "'>" . $recipients['fullname'] . "</option>";
-                                            }
+                        <form action="modules/issueitem.php" method="POST">
+                            <div class="form-group">
+                                <label>Recipient</label><br>
+                                <select name="recipient" class="form-control js-example-basic-single">
+                                    <option value="" disabled="disabled" selected>Select a recipient</option>
+                                    <?php
+                                    $fetchAll = "SELECT * FROM customers";
+                                    $result = $conn->query($fetchAll);
+                                    if ($conn->affected_rows > 0) {
+                                        while ($recipients = $result->fetch_assoc()) {
+                                            echo "<option value='" . $recipients['ID'] . "'>" . $recipients['fullname'] . "</option>";
                                         }
-                                        ?>
-                                    </select>
-                                </div>
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <input type="text" name="description" class="form-control">
-                                </div>
+                            <!--div class="form-group">
+                                <label>Description</label>
+                                <input type="text" name="description" class="form-control">
+                            </div-->
+
+
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input  required type="number" min="1" name="quantity" class="form-control">
                             </div>
                             <!-- /.col -->
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Item</label>
-                                    <select name="item" class="form-control js-example-basic-single">
-                                        <option value="" disabled="disabled" selected>Select an item</option>
-                                        <?php
-                                        $fetchAll = "SELECT * FROM merchandise";
-                                        $result = $conn->query($fetchAll);
-                                        if ($conn->affected_rows > 0) {
-                                            while ($recipients = $result->fetch_assoc()) {
-                                                echo "<option value='" . $recipients['ID'] . "'>" . $recipients['item_name'] . "</option>";
-                                            }
+                            <div class="form-group">
+                                <label>Item</label><br>
+                                <select name="item" class="form-control js-example-basic-single">
+                                    <option value="" disabled="disabled" selected>Select an item</option>
+                                    <?php
+                                    $fetchAll = "SELECT * FROM merchandise";
+                                    $result = $conn->query($fetchAll);
+                                    if ($conn->affected_rows > 0) {
+                                        while ($items = $result->fetch_assoc()) {
+                                            echo "<option value='" . $items['id'] . "'>" . $items['item_name'] . "</option>";
                                         }
-                                        ?>
-                                    </select>
+                                    }
+                                    ?>
+                                </select>
+                        <br><br>
 
-                                </div>
 
-
-                                <div class="form-group">
-                                    <label>Date</label>
-                                    <input type="date" class="form-control">
-                                </div>
-                            </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <!--placeholder to push that button to the right-->
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" name="issueitem" class="btn btn-success pull-right">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" name="date" class="form-control">
+                        </div>
                     </div>
                 </div>
-                </form>
-                <div class="card-footer">
-
+                <!-- /.card-body -->
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <!--placeholder to push that button to the right-->
                 </div>
+                <div class="col-md-2">
+                    <input type="submit" name="issueitem" class="btn btn-success">
+                </div>
+            </div>
+            </form>
+            <div class="card-footer">
+
+            </div>
 </section>
 <?php
 require_once("inc/footer.php");
