@@ -155,12 +155,14 @@ if (!isset($_REQUEST['customer_id'])) {
                         <?php
 
                         $fullUserData = "SELECT customers.ID, customers.fullname, itemsrecord.id, itemsrecord.recipient_id,
-                        itemsrecord.item_id, merchandise.item_name, itemsrecord.quantity, itemsrecord.issue_date FROM customers, itemsrecord, merchandise
+                        itemsrecord.item_id, merchandise.item_name, itemsrecord.quantity, itemsrecord.issue_date,
+                        itemsrecord.issued_by FROM customers, itemsrecord, merchandise
                         WHERE customers.ID = itemsrecord.recipient_id AND merchandise.id = itemsrecord.item_id AND itemsrecord.recipient_id = $userid   ";
                         //  die($query);
                         echo '<table class="table-striped col-md-6">
             <th>Item Name</th>
             <th>Quantity</th>
+            <th>Issued By</th>
             <th>Date Issued</th>';
                         if ($conn->query($fullUserData)) {
                             $runQuery = $conn->query($fullUserData);
@@ -170,6 +172,7 @@ if (!isset($_REQUEST['customer_id'])) {
                                 echo "<tr>
                    <td>" . $merchInfo['item_name'] . "</td>
                    <td>" . $merchInfo['quantity'] . "</td>
+                   <td>" . $merchInfo['issued_by'] . "</td>
                    <td>" . $merchInfo['issue_date'] . "</td>
                    </tr>";
                             }

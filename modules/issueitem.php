@@ -5,6 +5,7 @@ if (isset($_REQUEST['issueitem'])) {
 
     $recipient = $conn->real_escape_string($_REQUEST['recipient']);
     $item = $conn->real_escape_string($_REQUEST['item']);
+    $issuer = $conn->real_escape_string($_REQUEST['issuer']);
     //$description = $conn->real_escape_string($_REQUEST['description']);
     $date = $_REQUEST['date'];
     $quantity = $_REQUEST['quantity'];
@@ -25,6 +26,7 @@ if (isset($_REQUEST['issueitem'])) {
     //check if stock is available
     $checkStock = "SELECT * FROM merchandise WHERE id = $item";
     $runQuery = $conn->query($checkStock);
+    //var_dump($checkStock);die();
     $stockData = $runQuery->fetch_assoc();
     if ($stockData['quantity'] == 0) {
     ?>
@@ -37,8 +39,8 @@ if (isset($_REQUEST['issueitem'])) {
     } else {
         //record the consignment of the item to the customer in the "itemsrecord" table
 
-        $query = "INSERT INTO itemsrecord(item_id, recipient_id, quantity, issue_date)
-    VALUES('$item', '$recipient', '$quantity', '$date')";
+        $query = "INSERT INTO itemsrecord(item_id, recipient_id, quantity, issue_date, issued_by)
+    VALUES('$item', '$recipient', '$quantity', '$date', '$issuer')";
 
         if ($conn->query($query)) {
             //update the merchandise table to reflect the merchandise that has been issued to a customer

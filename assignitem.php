@@ -66,6 +66,10 @@ require_once("inc/sidebar.php");
                                 <label>Quantity</label>
                                 <input  required type="number" min="1" name="quantity" class="form-control">
                             </div>
+
+
+                                        <input type="hidden" value="<?php echo $checkUsers->userData($conn)['user_fname']; ?>" name="issuer">
+                                   
                             <!-- /.col -->
 
                             <div class="form-group">
