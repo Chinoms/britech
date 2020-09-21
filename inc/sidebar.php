@@ -88,6 +88,13 @@
                   <p>Assign items to users</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="viewstock.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Stock</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>

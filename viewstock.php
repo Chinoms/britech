@@ -47,7 +47,7 @@
                         //  die($query);
                         echo '<table class="table-striped col-md-6">
             <th>Item Name</th>
-            <th>Quantity</th>';
+            <th>Quantity</th>   ';
                         if ($conn->query($fullUserData)) {
                             $runQuery = $conn->query($fullUserData);
                             while ($merchInfo = $runQuery->fetch_assoc()) {
