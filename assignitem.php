@@ -49,7 +49,7 @@ require_once("inc/sidebar.php");
                                     $result = $conn->query($fetchAll);
                                     if ($conn->affected_rows > 0) {
                                         while ($recipients = $result->fetch_assoc()) {
-                                            echo "<option value='" . $recipients['ID'] . "'>" . $recipients['fullname'] . "</option>";
+                                            echo "<option value='" . $recipients['ID'] . "'>" . $recipients['username'] . "</option>";
                                         }
                                     }
                                     ?>
