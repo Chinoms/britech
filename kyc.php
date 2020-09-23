@@ -90,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <div class="form-group">
                                 <label>Trading Days</label>
-                                <input type="number" class="form-control" max="100" id="daysleft" required>
+                                <input type="number" class="form-control" max="120" id="daysleft" required>
                             </div>
                             <div class="form-group">
                                 <label>Bank</label>
