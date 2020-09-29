@@ -5,7 +5,7 @@ if (!isset($_REQUEST['customer_id'])) {
     require_once("inc/header.php");
     require_once("inc/sidebar.php");
     $userid = $_REQUEST['customer_id'];
-    $query = "SELECT * FROM customers WHERE ID = $userid";
+    $query = "SELECT * FROM customers, banks WHERE customers.ID = $userid";
     if ($conn->query($query) == TRUE) {
         $userData = $conn->query($query);
         $userInfo = $userData->fetch_assoc();
@@ -112,6 +112,10 @@ if (!isset($_REQUEST['customer_id'])) {
                                 <tr>
                                     <td>Account Number</td>
                                     <td><input class="form-control" type="text" name="accountnumber" disabled value="<?php echo $userInfo['accountnumber'] ?>"></td>
+                                </tr>
+                                <tr>
+                                    <td>Bank Name</td>
+                                    <td><input class="form-control" type="text" name="accountnumber" disabled value="<?php echo $userInfo['bank_name'] ?>"></td>
                                 </tr>
                                 <tr>
                                     <td>Phone number</td>
