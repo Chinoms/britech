@@ -92,7 +92,8 @@ class Customers extends Crud
         $result = $conn->query($fetchPages);
         $totalRecords = $result->fetch_array()[0];
         $totalPages = ceil($totalRecords / $recordsPerPage);
-        $sql = "SELECT * FROM $tableName WHERE daysleft < 3 LIMIT $start, $recordsPerPage ORDER BY ID DESCC";
+        $sql = "SELECT * FROM $tableName WHERE daysleft < 3 AND viplevel < 3 ORDER BY ID DESC LIMIT $start, $recordsPerPage";
+        //die($sql);
         $tableData = $conn->query($sql);
         $tradingPeriods2 = "<button class='btn btn-primary'>Trade 10 days</button>";
         while ($userData = $tableData->fetch_assoc()) {
@@ -293,7 +294,7 @@ class Customers extends Crud
 
     function countVIP4($conn)
     {
-        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel =3 AND verified = 1";
+        $query = "SELECT COUNT(*) as total FROM customers WHERE viplevel = 4 AND verified = 1";
         $allCustomers = $conn->query($query);
         $totalCustomers = $allCustomers->fetch_assoc();
         echo $totalCustomers['total'];

@@ -28,11 +28,11 @@ require_once("classes/customers.php");
   <section class="content">
     <div class="card">
       <div class="card-body">
-        <button class='btn btn-danger col-md-2'>Due For Trading</button>
-        <button class='btn btn-primary col-md-2'>List VIP1 Members</button>
+        <a href="listusers.php?totrade"><button class='btn btn-danger col-md-2'>Due For Trading</button></a>
+        <!--button class='btn btn-primary col-md-2'>List VIP1 Members</button>
         <button class='btn btn-success col-md-2'>List VIP2 Members</button>
         <button class='btn btn-dark col-md-2'>List VIP2 Members</button>
-        <button class='btn btn-warning col-md-2'>List VIP3 Members</button>
+        <button class='btn btn-warning col-md-2'>List VIP3 Members</button-->
       </div>
     </div>
     <!-- Default box -->
@@ -134,6 +134,35 @@ require_once("classes/customers.php");
           </li>
           <li>
             <a href="?s=<?php echo $searchTerm; ?>&&?pagenum=<?php echo $totalPages; ?>"><button class="btn btn-primary">Last</button></a>
+          </li>
+        </ul>
+      <?php
+      } elseif (isset($_REQUEST['totrade'])) {
+      ?>
+        <ul class="pagination">
+          <li>
+            <a href="?totrade&&?pagenum=1"><button class="btn btn-primary">First</button> &nbsp;</a>
+          </li>
+          <li class="<?php if ($pagenum <= 1) {
+                        echo 'disabled';
+                      } ?>">
+            <a href="<?php if ($pagenum <= 1) {
+                        echo '#';
+                      } else {
+                        echo "?totrade&&?pagenum=" . ($pagenum - 1);
+                      } ?>"><button class="btn btn-primary">Prev</button> &nbsp;</a>
+          </li>
+          <li class="<?php if ($pagenum >= $totalPages) {
+                        echo 'disabled';
+                      } ?>">
+            <a href="<?php if ($pagenum >= $totalPages) {
+                        echo '#';
+                      } else {
+                        echo "?totrade&&?pagenum=" . ($pagenum + 1);
+                      } ?>"><button class="btn btn-primary">Next</button> &nbsp;</a>
+          </li>
+          <li>
+            <a href="?totrade&&?pagenum=<?php echo $totalPages; ?>"><button class="btn btn-primary">Last</button></a>
           </li>
         </ul>
       <?php
