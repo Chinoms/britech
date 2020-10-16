@@ -29,7 +29,7 @@ require_once("inc/sidebar.php");
 
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Select2 (Default Theme)</h3>
+                    <h3 class="card-title">Record new transaction</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -37,17 +37,19 @@ require_once("inc/sidebar.php");
                     </div>
                 </div>
                 <!-- /.card-header -->
+                <form method="POST" action="modules/recordtransaction.php">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Amount</label>
-                                <input type="number" class="form-control">
+                                <input type="number" class="form-control" name="amount">
                             </div>
 
                             <div class="form-group">
                                 <label>Transaction type</label>
                                 <select name="type" class="form-control">
+                                    <option value="" selected="selected" disabled>Select Type</option>
                                     <option value="cashreceived">Cash received</option>
                                     <option value="paidtobank">Paid To Bank</option>
                                 </select>
@@ -64,7 +66,11 @@ require_once("inc/sidebar.php");
 
                             <div class="form-group">
                                 <label>Date</label>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" name="date">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" class="form-control btn btn-primary" name="savetransaction">
                             </div>
                         </div>
                     </div>
@@ -72,8 +78,7 @@ require_once("inc/sidebar.php");
                 </div>
                 
                 <div class="card-footer">
-                        Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-                        the plugin.
+                        
                     </div>
 </section>
 <?php

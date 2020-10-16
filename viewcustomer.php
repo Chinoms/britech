@@ -5,10 +5,12 @@ if (!isset($_REQUEST['customer_id'])) {
     require_once("inc/header.php");
     require_once("inc/sidebar.php");
     $userid = $_REQUEST['customer_id'];
-    $query = "SELECT * FROM customers, banks WHERE customers.ID = $userid";
+    $query = "SELECT * FROM customers, banks WHERE customers.ID = $userid AND customers.id = banks.id";
+    //die($query);
     if ($conn->query($query) == TRUE) {
         $userData = $conn->query($query);
         $userInfo = $userData->fetch_assoc();
+    //var_dump($userInfo);
     }
 
 ?>
