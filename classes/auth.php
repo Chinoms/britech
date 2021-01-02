@@ -89,6 +89,7 @@ class Auth extends Crud
             $userInfo = $conn->query("SELECT * FROM users WHERE id = '$session'");
             if ($conn->affected_rows == 1) {
                 $userProfile = $userInfo->fetch_assoc();
+                //var_dump($userProfile);
                 return $userProfile;
             }
         }

@@ -4,12 +4,74 @@ function _(id) {
 }
 
 
+function fetchUserInfo() {
+	event.preventDefault()
+	userInfo = new FormData
+	userInfo.append("userid", _("userid").value)
+	
+	//alert(_("userid").value);
+	let ajax = new XMLHttpRequest()
+	ajax.open("POST", "modules/fetchuserdata.php")
+	ajax.onreadystatechange = function () {
+		if (ajax.readyState == 4 && ajax.status == 200) {
+			let feedback = ajax.responseText
+			let userPayload = JSON.parse(feedback)
+			console.log(userPayload)
+			_("username").value = userPayload[0].username
+			_("fullname").value = userPayload[0].fullname
+			_("accountnumber").value = userPayload[0].accountnumber
+			_("sortcode").value = userPayload[0].bank
+
+		}
+	}
+
+	ajax.send(userInfo);
+}
+
+
+function filterUsersByDate() {
+	event.preventDefault();
+	dateParams = new FormData()
+	dateParams.append("start", _("start").value)
+	dateParams.append("end", _("end").value)
+	dateParams.append("servicecenter", _("servicecenter").value)
+	var ajax = new XMLHttpRequest();
+	ajax.open("POST", "modules/filterbydate.php")
+	ajax.onreadystatechange = function () {
+		if (ajax.readyState == 4 && ajax.status == 200) {
+			if (ajax.responseText !== "failed" || ajax.responseText !== "empty") {
+				let feedback = ajax.responseText
+				//alert(feedback)
+				let recipient = JSON.parse(feedback)
+				let select = _("recipient")
+				//clear dropdown before populating it with new data
+				//else, new data from the database will be appended to previously appended data
+
+
+				let length = select.options.length;
+				for (i = length - 1; i >= 0; i--) {
+					select.options[i] = null;
+				}
+
+
+				for (var i = 0; i < recipient.length; i++) {
+					select.innerHTML = select.innerHTML +
+						'<option value="' + recipient[i].ID + '">' + recipient[i].fullname + '</option>'
+				}
+			}
+		}
+	}
+	ajax.send(dateParams)
+}
+
+
 
 function addUser() {
 	event.preventDefault();
 	_("saveuser").disabled = true;
 	_("errorinfo").innerHTML = "<p class='text-danger'>Processing customer info . . .</div>";
 	var userData = new FormData();
+	//alert(_("servicecenter").value)
 	userData.append("fullname", _("fullname").value);
 	userData.append("username", _("username").value);
 	userData.append("password", _("password").value);
@@ -21,6 +83,7 @@ function addUser() {
 	userData.append("viplevel", _("viplevel").value);
 	userData.append("referrer", _("referrer").value);
 	userData.append("daysleft", _("daysleft").value);
+	userData.append("servicecenter", _("servicecenter").value);
 
 	var ajax = new XMLHttpRequest();
 	ajax.open("POST", "modules/adduser.php");

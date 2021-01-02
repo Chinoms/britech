@@ -36,37 +36,29 @@ require_once("inc/sidebar.php");
                         <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
+
+                <?php
+                if ($privilege != "superadmin") {
+                    die("<h1>You don't have sufficient privileges to access this page.</h1>");
+                }
+
+                ?>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
-                        <form onsubmit="filterUsersByDate()">
-                            <div class="form-group">
-                                <label>Start</label>
-                                <input type="date" name="start" id="start" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label>End</label>
-                                <input type="date" name="end" id="end" class="form-control">
-                            </div>
-                            <input type="hidden" value="<?php echo $serviceCenter; ?>" id="servicecenter" name="servicecenter">
-                            <input type="submit" value="Filter" class="btn btn-primary">
-                        </form>
-                    </div>
-                    <div class="row">
-                        <form action="modules/issueitem.php" method="POST">
+                        <form action="modules/issueitem-svc.php" method="POST">
                             <div class="form-group">
                                 <label>Recipient</label><br>
-                                <select name="recipient" id="recipient" class="form-control js-example-basic-single">
+                                <select name="recipient" class="form-control js-example-basic-single">
                                     <option value="" disabled="disabled" selected>Select a recipient</option>
                                     <?php
-                                    // $fetchAll = "SELECT * FROM customers WHERE verified = 1 AND service_center_id = $serviceCenter";
-                                    // $result = $conn->query($fetchAll);
-                                    // if ($conn->affected_rows > 0) {
-                                    //     while ($recipients = $result->fetch_assoc()) {
-                                    //         echo "<option value='" . $recipients['ID'] . "'>" . $recipients['username'] . "</option>";
-                                    //     }
-                                    // }
+                                    $fetchAll = "SELECT * FROM service_centers";
+                                    $result = $conn->query($fetchAll);
+                                    if ($conn->affected_rows > 0) {
+                                        while ($centers = $result->fetch_assoc()) {
+                                            echo "<option value='" . $centers['id'] . "'>" . $centers['centername'] . "</option>";
+                                        }
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -92,7 +84,7 @@ require_once("inc/sidebar.php");
                                 <select name="item" class="form-control js-example-basic-single">
                                     <option value="" disabled="disabled" selected>Select an item</option>
                                     <?php
-                                    $fetchAll = "SELECT * FROM merchandise, service_center_merch WHERE service_center_merch.id = merchandise.id AND service_center_merch.service_center_id = $serviceCenter";
+                                    $fetchAll = "SELECT * FROM merchandise";
                                     $result = $conn->query($fetchAll);
                                     if ($conn->affected_rows > 0) {
                                         while ($items = $result->fetch_assoc()) {

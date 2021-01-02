@@ -69,9 +69,9 @@ require_once("inc/sidebar.php");
 
                         <div class="form-group">
                             <label>Account number</label>
-                            <input type="tel" pattern="[0-9]{10}"  title="It must be a 10-digit account number" id="accountnumber" class="form-control" name="accountnumber" placeholder="Enter customer's account number">
+                            <input type="tel" pattern="[0-9]{10}" title="It must be a 10-digit account number" id="accountnumber" class="form-control" name="accountnumber" placeholder="Enter customer's account number">
                         </div>
-                        <input type="hidden" value='<?php echo date("d-m-Y"); ?>' id="dateregistered">
+                        <input type="hidden" value='<?php echo date("Y-m-d"); ?>' id="dateregistered">
                         <div class="form-group">
                             <label>VIP Level</label>
                             <select class="js-example-basic-single form-control" data-placeholder="Select a VIP Level" id="viplevel" class="form-control" required>
@@ -90,13 +90,15 @@ require_once("inc/sidebar.php");
                                 <option selected value="">Choose</option>
                                 <option selected value="">Choose</option>
                                 <?php
-                                $runCustomers->fetchUsersDropdown($conn)
+                                $runCustomers->fetchUsersDropdown($conn, $serviceCenter);
                                 ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Trading Days</label>
                             <input type="number" class="form-control" max="100" id="daysleft" required>
+                            <input type="hidden" value='<?php echo $serviceCenter; ?>' id="servicecenter">
+
                         </div>
                         <div class="form-group">
                             <label>Bank</label>

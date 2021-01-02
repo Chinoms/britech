@@ -32,16 +32,19 @@ class Customers extends Crud
         }
     }
 
-    function paginate($conn, $pagenum, $tableName, $recordsPerPage)
+    function paginate($conn, $pagenum, $tableName, $recordsPerPage, $serivceCenter)
     {
         $start = ($pagenum - 1) * $recordsPerPage;
-        $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE verified = 1 ORDER BY ID DESC"; //change "tableName" to your table name.
+        $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE verified = 1 AND service_center_id = $serivceCenter ORDER BY ID DESC"; //change "tableName" to your table name.
         $result = $conn->query($fetchPages);
         $totalRecords = $result->fetch_array()[0];
         $totalPages = ceil($totalRecords / $recordsPerPage);
-        $sql = "SELECT * FROM $tableName WHERE verified = 1 ORDER BY ID DESC LIMIT $start, $recordsPerPage";
+        $sql = "SELECT * FROM $tableName WHERE verified = 1 AND service_center_id = $serivceCenter ORDER BY ID DESC LIMIT $start, $recordsPerPage";
         $tableData = $conn->query($sql);
         $tradingPeriods2 = "<button class='btn btn-primary'>Trade 10 days</button>";
+        if($conn->affected_rows < 1){
+            echo "<h3>Oops! No results.</h3>";
+        } else{
         while ($userData = $tableData->fetch_assoc()) {
             //echo "<li>" . $userData['fullname'] . "</li>"; //change 'name' to the appropriate offset from your database table.
             if ($userData['daysleft']  < 2) {
@@ -79,6 +82,7 @@ class Customers extends Crud
                       </tr>
                     <tr>';
         }
+    }
 
         echo '</tbody>
         </table>';
@@ -137,14 +141,16 @@ class Customers extends Crud
         </table>';
     }
 
-    function searchCustomers($conn, $pagenum, $tableName, $recordsPerPage, $searchTerm)
+    function searchCustomers($conn, $pagenum, $tableName, $recordsPerPage, $searchTerm, $serviceCenter)
     {
         $start = ($pagenum - 1) * $recordsPerPage;
-        $fetchPages = "SELECT COUNT(*) FROM $tableName"; //change "tableName" to your table name.
+        $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE service_center_id = $serviceCenter "; //change "tableName" to your table name.
+        //die($fetchPages);
         $result = $conn->query($fetchPages);
         $totalRecords = $result->fetch_array()[0];
         $totalPages = ceil($totalRecords / $recordsPerPage);
-        $sql = "SELECT * FROM $tableName WHERE phone LIKE '%$searchTerm%' OR username LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' AND verified = 1  ORDER BY ID DESC LIMIT $start, $recordsPerPage";
+        $sql = "SELECT * FROM customers WHERE (phone LIKE '%tester%' OR username LIKE '%tester%' OR fullname LIKE '%tester%') AND verified = 1 AND service_center_id = 1 ORDER BY ID DESC LIMIT 0, 3";
+        //die($sql);
         $tableData = $conn->query($sql);
 
         while ($userData = $tableData->fetch_assoc()) {
@@ -249,9 +255,9 @@ class Customers extends Crud
     }
 
 
-    function fetchUsersDropdown($conn)
+    function fetchUsersDropdown($conn, $serivceCenter)
     {
-        $query = "SELECT * FROM customers ORDER BY fullname ASC";
+        $query = "SELECT * FROM customers WHERE service_center_id = $serivceCenter AND verified = 1 ORDER BY fullname ASC";
         $query = $conn->query($query);
         while ($banks = $query->fetch_assoc()) {
             echo '<option value="' . $banks["username"] . '">' . $banks['fullname'] . '</option>';

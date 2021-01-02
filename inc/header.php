@@ -28,9 +28,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://adminlte.io/themes/v3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="https://adminlte.io/themes/v3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" rel="stylesheet">
+  <link href="https://adminlte.io/themes/v3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet">
+
 </head>
 
 <body class="hold-transition sidebar-mini">
+
+
+  <?php
+  $serviceCenter = $checkUsers->userData($conn)['service_center'];
+  $privilege = $checkUsers->userData($conn)['user_access']
+  ?>
   <div class="wrapper">
 
     <!-- Navbar -->

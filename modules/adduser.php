@@ -14,13 +14,14 @@ $data[7] = $_REQUEST['dateregistered'];
 $data[8] = $_REQUEST['viplevel'];
 $data[9] = $_REQUEST['referrer'];
 $data[10] = $_REQUEST['daysleft'];
+$data[11] = $_REQUEST['servicecenter'];
 
 $tablename = "customers";
 $tableName = "customers";
 $columnName = "username";
 $value = $data[1];
 
-$columns = "fullname, username, password, gender, phone, accountnumber, bank, dateregistered, viplevel, referrer, daysleft";
+$columns = "fullname, username, password, gender, phone, accountnumber, bank, dateregistered, viplevel, referrer, daysleft, service_center_id";
 if ($data[6] == "" || $data[6] == null || empty($data[6])) {
     die("choosebank");
 } else if ($data[9] == "" || $data[9] == null || empty($data[9])) {

@@ -53,7 +53,7 @@ require_once("classes/customers.php");
 
 
 
-                $fetchPages = "SELECT COUNT(*) FROM $tableName";
+                $fetchPages = "SELECT COUNT(*) FROM $tableName WHERE service_center_id = $serviceCenter ";
                 $result = $conn->query($fetchPages);
                 $totalRecords = mysqli_fetch_array($result)[0];
                 $totalPages = ceil($totalRecords / $recordsPerPage);
@@ -72,7 +72,7 @@ require_once("classes/customers.php");
       <tbody>';
 
                 $searchTerm = $_REQUEST['s'];
-                $runCustomers->searchCustomers($conn, $pagenum, $tableName, $recordsPerPage, $searchTerm);
+                $runCustomers->searchCustomers($conn, $pagenum, $tableName, $recordsPerPage, $searchTerm, $serviceCenter);
 
 
                 echo '</tbody>
@@ -85,7 +85,7 @@ require_once("classes/customers.php");
             <div class="card-footer">
                 <ul class="pagination">
                     <li>
-                        <a href="search.php?s=<?php echo $_REQUEST['s']; ?>"&&?pagenum=1"><button class="btn btn-primary">First</button> &nbsp;</a>
+                        <a href="search.php?s=<?php echo $_REQUEST['s']; ?>" &&?pagenum=1"><button class="btn btn-primary">First</button> &nbsp;</a>
                     </li>
                     <li class="<?php if ($pagenum <= 1) {
                                     echo 'disabled';
@@ -93,7 +93,7 @@ require_once("classes/customers.php");
                         <a href="<?php if ($pagenum <= 1) {
                                         echo '#';
                                     } else {
-                                        echo "search.php?s=".$_REQUEST['s']."&&?pagenum=" . ($pagenum - 1);
+                                        echo "search.php?s=" . $_REQUEST['s'] . "&&?pagenum=" . ($pagenum - 1);
                                     } ?>"><button class="btn btn-primary">Prev</button> &nbsp;</a>
                     </li>
                     <li class="<?php if ($pagenum >= $totalPages) {
@@ -102,11 +102,11 @@ require_once("classes/customers.php");
                         <a href="<?php if ($pagenum >= $totalPages) {
                                         echo '#';
                                     } else {
-                                        echo "search.php?s=".$_REQUEST['s']."&&?pagenum=" . ($pagenum + 1);
+                                        echo "search.php?s=" . $_REQUEST['s'] . "&&?pagenum=" . ($pagenum + 1);
                                     } ?>"><button class="btn btn-primary">Next</button> &nbsp;</a>
                     </li>
                     <li>
-                        <a href="search.php?s=<?php echo $_REQUEST['s'];?>"&&?pagenum=<?php echo $totalPages; ?>"><button class="btn btn-primary">Last</button></a>
+                        <a href="search.php?s=<?php echo $_REQUEST['s']; ?>" &&?pagenum=<?php echo $totalPages; ?>"><button class="btn btn-primary">Last</button></a>
                     </li>
                 </ul>
 

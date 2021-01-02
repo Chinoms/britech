@@ -89,14 +89,14 @@ require_once("classes/customers.php");
       <tbody>';
         if (isset($_REQUEST['s'])) {
           $searchTerm = $_REQUEST['s'];
-          $runCustomers->searchCustomers($conn, $pagenum, $tableName, $recordsPerPage, $searchTerm);
+          $runCustomers->searchCustomers($conn, $pagenum, $tableName, $recordsPerPage, $searchTerm, $serviceCenter);
         } else if (isset($_REQUEST['totrade'])) {
           $tableName = "customers";
           $recordsPerPage = 20;
-          $runCustomers->toBeTraded($conn, $pagenum, $tableName, $recordsPerPage);
+          $runCustomers->toBeTraded($conn, $pagenum, $tableName, $recordsPerPage, $serviceCenter);
         } else {
 
-          $runCustomers->paginate($conn, $pagenum, $tableName, $recordsPerPage);
+          $runCustomers->paginate($conn, $pagenum, $tableName, $recordsPerPage, $serviceCenter);
         }
 
         echo '</tbody>
