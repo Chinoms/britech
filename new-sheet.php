@@ -27,14 +27,14 @@ require_once("inc/sidebar.php");
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">New Request</h3>
+                <h3 class="card-title">New Spreadsheet</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
 
 <form method="POST" action="modules/savesheet.php">
     <div class="form-group">
-        <label>Name of Request</label>
+        <label>Name of Spreadsheet</label>
         <input type="text" class="form-control" name="name">
         <br>
         <input type="submit" value="Save" class="btn btn-primary">

@@ -3,6 +3,13 @@ require_once("classes/config.php");
 require_once("classes/customers.php");
 require_once("inc/header.php");
 require_once("inc/sidebar.php");
+if (isset($_REQUEST['bank'])) {
+    if ($_REQUEST['bank'] == "058152052") {
+        $bank = "gtb";
+    } else {
+        $bank = "others";
+    }
+}
 ?>
 
 <div class="content-wrapper">
@@ -27,7 +34,7 @@ require_once("inc/sidebar.php");
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">New Request</h3>
+                <h2 class="card-title">New Request | Bank: <span style="color:red"><?php echo ucwords($bank); ?></span></h2>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -38,7 +45,11 @@ require_once("inc/sidebar.php");
                         <select class="form-control js-example-basic-single" id="userid" onchange="fetchUserInfo()">
                             <option selected disabled>Select a user</option>
                             <?php
-                            $fetchAll = "SELECT * FROM customers WHERE verified = 1 AND service_center_id = $serviceCenter";
+                            if ($bank == "gtb") {
+                                $fetchAll = "SELECT * FROM customers WHERE verified = 1 AND service_center_id = $serviceCenter AND bank ='058152052'";
+                            } else {
+                                $fetchAll = "SELECT * FROM customers WHERE verified = 1 AND service_center_id = $serviceCenter AND bank !='058152052'";
+                            }
                             $result = $conn->query($fetchAll);
                             if ($conn->affected_rows > 0) {
                                 while ($recipients = $result->fetch_assoc()) {
@@ -54,7 +65,7 @@ require_once("inc/sidebar.php");
                     </div>
                 </form>
                 <form method="POST" action="modules/save-request.php" class="col-md-5">
-                                   <div class="form-group">
+                    <div class="form-group">
                         <label>Number of Chypoints *</label>
                         <input type="number" name="chypoints" class="form-control">
                     </div>
@@ -72,7 +83,7 @@ require_once("inc/sidebar.php");
 
                     <div class="form-group">
                         <label>Remark *</label>
-                        <input type="text" maxlength="25" name="remark" class="form-control" placeholder="CHYMALL (TEAM BRITECH)">
+                        <input type="text" maxlength="25" name="remark" value="TEAM BRITECH" class="form-control" placeholder="CHYMALL (TEAM BRITECH)">
                     </div>
 
 
@@ -100,10 +111,10 @@ require_once("inc/sidebar.php");
                     </div>
 
                     <div class="form-group">
-                    <label>Select Spreadsheet</label>
-                    <select class="form-control  js-example-basic-single" required>
-                        <option disabled selected>Select Spreadsheet</option>
-                    <?php
+                        <label>Select Spreadsheet</label>
+                        <select class="form-control  js-example-basic-single" required name="request">
+                            <option disabled selected>Select Spreadsheet</option>
+                            <?php
                             $fetchAll = "SELECT * FROM requests";
                             $result = $conn->query($fetchAll);
                             if ($conn->affected_rows > 0) {
@@ -112,8 +123,8 @@ require_once("inc/sidebar.php");
                                 }
                             }
                             ?>
-                    </select>
-                </div>   
+                        </select>
+                    </div>
 
 
 

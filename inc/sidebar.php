@@ -107,7 +107,7 @@
 
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="newcenter.php" class="nav-link">
+              <a href="new-sheet.php" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Create New Spreadsheet</p>
               </a>
@@ -116,7 +116,7 @@
 
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="create-request.php" class="nav-link">
+              <a href="create-request.php?bank=058152052" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Create New Request</p>
               </a>
@@ -128,7 +128,7 @@
               echo '<li class="nav-item">
   <a href="list-records.php" class="nav-link">
     <i class="far fa-circle nav-icon"></i>
-    <p>Create New Request</p>
+    <p>List Spreadsheets</p>
   </a>
 </li>';
             }

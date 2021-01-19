@@ -48,17 +48,18 @@ require_once("inc/sidebar.php");
                     <tbody>
                         <?php
                         $sheet_id = $_REQUEST['id'];
-                        $query = "SELECT * FROM request_details WHERE id = $sheet_id";
+                        $query = "SELECT * FROM request_details WHERE request_id = $sheet_id";
+                        //die($query);
                         $fetchRequests = $conn->query($query);
-                        while($sheetRows = $fetchRequests->fetch_object()){
-                            echo '<td>'.number_format($sheetRows->PaymentAmount).'.00</td>';
-                            echo '<td>'.$sheetRows->PaymentDate.'</td>';
-                            echo '<td>'.$sheetRows->Reference.'</td>';
-                            echo '<td>'.$sheetRows->Remark.'</td>';
-                            echo '<td>'.$sheetRows->VendorCode.'</td>';
-                            echo '<td>'.$sheetRows->VendorName.'</td>';
-                            echo '<td>'.$sheetRows->VendorAcctNumber.'</td>';
-                            echo '<td>'.$sheetRows->VendorBankSortCode.'</td>
+                        while($sheetRows = $fetchRequests->fetch_assoc()){
+                            echo '<td>'.number_format($sheetRows["PaymentAmount"]).'.00</td>';
+                            echo '<td>'.$sheetRows["PaymentDate"].'</td>';
+                            echo '<td>'.$sheetRows["Reference"].'</td>';
+                            echo '<td>'.$sheetRows["Remark"].'</td>';
+                            echo '<td>'.$sheetRows["VendorCode"].'</td>';
+                            echo '<td>'.$sheetRows["VendorName"].'</td>';
+                            echo '<td>'.$sheetRows["VendorAcctNumber"].'</td>';
+                            echo '<td>'.$sheetRows["VendorBankSortCode"].'</td>
                             </tr>';
                         }
                         ?>
