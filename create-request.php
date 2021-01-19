@@ -9,7 +9,7 @@ if (isset($_REQUEST['bank'])) {
         $link = "create-request.php?bank=others";
     } else {
         $bank = "others";
-        $link ="058152052";
+        $link ="create-request.php?bank=058152052";
     }
 }
 
