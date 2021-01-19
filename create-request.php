@@ -5,11 +5,14 @@ require_once("inc/header.php");
 require_once("inc/sidebar.php");
 if (isset($_REQUEST['bank'])) {
     if ($_REQUEST['bank'] == "058152052") {
-        $bank = "gtb";
+        $bank = "GTBANK";
+        $link = "create-request.php?bank=others";
     } else {
         $bank = "others";
+        $link ="058152052";
     }
 }
+
 ?>
 
 <div class="content-wrapper">
@@ -23,7 +26,7 @@ if (isset($_REQUEST['bank'])) {
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
+                        <li class="breadcrumb-item active">Create Request</li>
                     </ol>
                 </div>
             </div>
@@ -34,7 +37,7 @@ if (isset($_REQUEST['bank'])) {
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title">New Request | Bank: <span style="color:red"><?php echo ucwords($bank); ?></span></h2>
+                <h2 class="card-title">New Request | Bank: <span style="color:red"><?php echo $bank; ?></span> &nbsp;</h2><a href="<?php echo $link;?>"><button class="btn btn-primary">SWITCH</button></a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -45,7 +48,7 @@ if (isset($_REQUEST['bank'])) {
                         <select class="form-control js-example-basic-single" id="userid" onchange="fetchUserInfo()">
                             <option selected disabled>Select a user</option>
                             <?php
-                            if ($bank == "gtb") {
+                            if ($bank == "GTBANK") {
                                 $fetchAll = "SELECT * FROM customers WHERE verified = 1 AND service_center_id = $serviceCenter AND bank ='058152052'";
                             } else {
                                 $fetchAll = "SELECT * FROM customers WHERE verified = 1 AND service_center_id = $serviceCenter AND bank !='058152052'";
